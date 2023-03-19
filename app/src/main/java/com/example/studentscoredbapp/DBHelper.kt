@@ -2,7 +2,6 @@ package com.example.studentscoredbapp
 
 import android.content.ContentValues
 import android.content.Context
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
@@ -16,6 +15,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         val NAME = "name"
         val SCORE = "score"
     }
+
     override fun onCreate(db: SQLiteDatabase?) {
         val query = (
                 "CREATE TABLE $TABLE_NAME (" +
@@ -25,11 +25,13 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
                 )
         db?.execSQL(query) // nullable
     }
+
     // Called when the database needs to be upgraded
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int){
         db!!.execSQL("DROP TABLE IF EXISTS $TABLE_NAME") // non-null assertion.         Error if null at compile time
         onCreate(db)
     }
+
     // This method is to add a subject record in DB
     fun addScore(name: String, score: String) {
         // This ContentValues class is used to store a set of values
@@ -44,13 +46,28 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         // close DB
         db.close()
     }
+
     // This method is get all subject records from DB
-    fun getAllSubjects(): Cursor? {
-        // create a readable DB variable of our database to read record
+    fun getAllSubjects(): ArrayList<Subject> {
         val db = this.readableDatabase
-        // read all records from DB
-        return db.rawQuery("SELECT * FROM " + TABLE_NAME, null)
+        // read all records from DB and get the cursor
+        val cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null)
+        val subjectList = ArrayList<Subject>() // User ArrayList
+        if (cursor.moveToFirst()) {
+            do { // add all users to the list
+                subjectList.add(
+                    Subject(
+                        cursor.getInt(cursor.getColumnIndexOrThrow(ID)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(NAME)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(SCORE))
+                    )
+                )
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        return subjectList
     }
+
     fun deleteSubject(name: String): Int {
         // create a writable DB variable of our database to delete record
         val db = this.writableDatabase
@@ -59,6 +76,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         db.close();
         return rows // 0 or 1
     }
+
     fun updateSubject(name: String, score: String): Int {
         // create a writable DB variable of our database to update record
         val db = this.writableDatabase
@@ -69,6 +87,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         db.close()
         return rows // rows updated
     }
+
     // This method is to recreated DB and tables
     fun recreateDatabaseAndTables() {
     }

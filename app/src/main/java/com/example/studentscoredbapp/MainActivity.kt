@@ -16,32 +16,24 @@ class MainActivity : AppCompatActivity() {
         btnAddSubject.setOnClickListener {
             val db = DBHelper(this, null)
             val etSubjectName = findViewById<EditText>(R.id.etSubjectName)
-            val etScore = findViewById<EditText>(R.id.etScore)
+            val etSubjectScore = findViewById<EditText>(R.id.etSubjectScore)
             val name = etSubjectName.text.toString()
-            val score = etScore.text.toString()
+            val score = etSubjectScore.text.toString()
             db.addScore(name, score)
             // Toast to message on the screen
             Toast.makeText(this, name + " added to database", Toast.LENGTH_SHORT).show()
             etSubjectName.text.clear()
-            etScore.text.clear()
+            etSubjectScore.text.clear()
         }
 
         val btnPrintSubjects = findViewById<Button>(R.id.btnPrintSubjects)
         btnPrintSubjects.setOnClickListener {
             val db = DBHelper(this, null)
-            val cursor = db.getAllSubjects()
-            cursor!!.moveToFirst()
+            val userList = db.getAllSubjects()
             val tvSubjectRecord = findViewById<TextView>(R.id.tvSubjectRecord)
             tvSubjectRecord.text = "### Subjects ###\n"
-            if (cursor!!.moveToFirst()) {
-                tvSubjectRecord.append(cursor.getString(0) + ": " +
-                        cursor.getString(1) +
-                        "(" + cursor.getString(2) + ")\n")
-            }
-            while (cursor.moveToNext()) {
-                tvSubjectRecord.append(cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.ID)) +
-                        ": " + cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.NAME)) +
-                        "(" + cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.SCORE)) + ")\n")
+            userList.forEach {
+                tvSubjectRecord.append("$it\n")
             }
         }
 
@@ -63,8 +55,8 @@ class MainActivity : AppCompatActivity() {
         btnUpdateSubject.setOnClickListener {
             val db = DBHelper(this, null)
             val subjectName = findViewById<EditText>(R.id.etSubjectName).text.toString()
-            val score = findViewById<EditText>(R.id.etScore).text.toString()
-            val rows = db.updateSubject(subjectName, score)
+            val subjectScore = findViewById<EditText>(R.id.etSubjectScore).text.toString()
+            val rows = db.updateSubject(subjectName, subjectScore)
             Toast.makeText(this, "$rows subjects updated", Toast.LENGTH_LONG).show()
         }
     }

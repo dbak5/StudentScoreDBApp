@@ -16,7 +16,7 @@
         android:textSize="20sp" />
     <!-- Edit text to enter score -->
     <EditText
-        android:id="@+id/etScore"
+        android:id="@+id/etSubjectScore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
