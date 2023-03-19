@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
             etSubjectScore.text.clear()
         }
 
+
         val btnPrintSubjects = findViewById<Button>(R.id.btnPrintSubjects)
         btnPrintSubjects.setOnClickListener {
             val db = DBHelper(this)
