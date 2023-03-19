@@ -2,7 +2,6 @@ package com.example.studentscoredbapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -13,60 +12,60 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val btnAddUser = findViewById<Button>(R.id.btnAddUser)
-        btnAddUser.setOnClickListener {
+        val btnAddSubject = findViewById<Button>(R.id.btnAddSubject)
+        btnAddSubject.setOnClickListener {
             val db = DBHelper(this, null)
-            val etUserName = findViewById<EditText>(R.id.etUserName)
-            val etAge = findViewById<EditText>(R.id.etAge)
-            val name = etUserName.text.toString()
-            val age = etAge.text.toString()
-            db.addUser(name, age)
+            val etSubjectName = findViewById<EditText>(R.id.etSubjectName)
+            val etScore = findViewById<EditText>(R.id.etScore)
+            val name = etSubjectName.text.toString()
+            val score = etScore.text.toString()
+            db.addScore(name, score)
             // Toast to message on the screen
             Toast.makeText(this, name + " added to database", Toast.LENGTH_SHORT).show()
-            etUserName.text.clear()
-            etAge.text.clear()
+            etSubjectName.text.clear()
+            etScore.text.clear()
         }
 
-        val btnPrintUsers = findViewById<Button>(R.id.btnPrintUsers)
-        btnPrintUsers.setOnClickListener {
+        val btnPrintSubjects = findViewById<Button>(R.id.btnPrintSubjects)
+        btnPrintSubjects.setOnClickListener {
             val db = DBHelper(this, null)
-            val cursor = db.getAllUsers()
+            val cursor = db.getAllSubjects()
             cursor!!.moveToFirst()
-            val tvUserRecord = findViewById<TextView>(R.id.tvUserRecord)
-            tvUserRecord.text = "### Users ###\n"
+            val tvSubjectRecord = findViewById<TextView>(R.id.tvSubjectRecord)
+            tvSubjectRecord.text = "### Subjects ###\n"
             if (cursor!!.moveToFirst()) {
-                tvUserRecord.append(cursor.getString(0) + ": " +
+                tvSubjectRecord.append(cursor.getString(0) + ": " +
                         cursor.getString(1) +
                         "(" + cursor.getString(2) + ")\n")
             }
             while (cursor.moveToNext()) {
-                tvUserRecord.append(cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.ID)) +
+                tvSubjectRecord.append(cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.ID)) +
                         ": " + cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.NAME)) +
-                        "(" + cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.AGE)) + ")\n")
+                        "(" + cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.SCORE)) + ")\n")
             }
         }
 
-        val btnDeleteUser = findViewById<Button>(R.id.btnDeleteUser)
-        btnDeleteUser.setOnClickListener {
+        val btnDeleteSubject = findViewById<Button>(R.id.btnDeleteSubject)
+        btnDeleteSubject.setOnClickListener {
             val db = DBHelper(this, null)
-            val userName = findViewById<EditText>(R.id.etUserName).text.toString()
-            val rows = db.deleteUser(userName)
+            val subjectName = findViewById<EditText>(R.id.etSubjectName).text.toString()
+            val rows = db.deleteSubject(subjectName)
             Toast.makeText(this,
                 when (rows) {
                     0 -> "Nothing deleted"
-                    1 -> "1 user deleted"
+                    1 -> "1 subject deleted"
                     else -> "" // shouldn't happen
                 },
                 Toast.LENGTH_LONG).show()
         }
 
-        val btnUpdateUser = findViewById<Button>(R.id.btnUpdateUser)
-        btnUpdateUser.setOnClickListener {
+        val btnUpdateSubject = findViewById<Button>(R.id.btnUpdateSubject)
+        btnUpdateSubject.setOnClickListener {
             val db = DBHelper(this, null)
-            val userName = findViewById<EditText>(R.id.etUserName).text.toString()
-            val age = findViewById<EditText>(R.id.etAge).text.toString()
-            val rows = db.updateUser(userName, age)
-            Toast.makeText(this, "$rows users updated", Toast.LENGTH_LONG).show()
+            val subjectName = findViewById<EditText>(R.id.etSubjectName).text.toString()
+            val score = findViewById<EditText>(R.id.etScore).text.toString()
+            val rows = db.updateSubject(subjectName, score)
+            Toast.makeText(this, "$rows subjects updated", Toast.LENGTH_LONG).show()
         }
     }
 }

@@ -8,55 +8,55 @@
     tools:context=".MainActivity">
     <!-- Edit text to enter name -->
     <EditText
-        android:id="@+id/etUserName"
+        android:id="@+id/etSubjectName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:hint="Enter User Name"
+        android:hint="@string/enter_subject_name"
         android:textSize="20sp" />
-    <!-- Edit text to enter age -->
+    <!-- Edit text to enter score -->
     <EditText
-        android:id="@+id/etAge"
+        android:id="@+id/etScore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:hint="Enter User Age"
+        android:hint="@string/enter_subject_score"
         android:textSize="20sp" />
-    <!-- Button to add User -->
+    <!-- Button to add Subject -->
     <Button
-        android:id="@+id/btnAddUser"
+        android:id="@+id/btnAddSubject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:text="Add User"
+        android:text="@string/add_subject"
         android:textSize="20sp" />
-    <!-- Button to delete User by name -->
+    <!-- Button to delete Subject by name -->
     <Button
-        android:id="@+id/btnDeleteUser"
+        android:id="@+id/btnDeleteSubject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:text="Delete User by Name"
+        android:text="@string/delete_subject_by_name"
         android:textSize="20sp" />
-    <!-- Button to update User age by name-->
+    <!-- Button to update Subject score by name-->
     <Button
-        android:id="@+id/btnUpdateUser"
+        android:id="@+id/btnUpdateSubject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:text="Update User by Name"
+        android:text="@string/update_subject_by_name"
         android:textSize="20sp" />
-    <!-- Button to print Users -->
+    <!-- Button to print Subjects -->
     <Button
-        android:id="@+id/btnPrintUsers"
+        android:id="@+id/btnPrintSubjects"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:text="Print All Users"
+        android:text="@string/print_all_subjects"
         android:textSize="20sp" />
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,15 +64,15 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <!-- Text view: Id, Name, Age -->
+            <!-- Text view: Id, Name, Score -->
             <TextView
-                android:id="@+id/tvUserRecord"
+                android:id="@+id/tvSubjectRecord"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20sp"
                 android:layout_weight="1"
                 android:padding="10sp"
-                android:text="Users:\n"
+                android:text="@string/subjects_n"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="22sp" />

@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">StudentScoreDBApp</string>
+    <string name="enter_subject_name">Enter Subject Name</string>
+    <string name="enter_subject_score">Enter Subject Age</string>
+    <string name="add_subject">Add Subject</string>
+    <string name="delete_subject_by_name">Delete Subject by Name</string>
+    <string name="update_subject_by_name">Update Subject by Name</string>
+    <string name="print_all_subjects">Print All Subjects</string>
+    <string name="subjects_n">Subjects:\n</string>
 </resources>
