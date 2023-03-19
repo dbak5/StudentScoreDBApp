@@ -2,10 +2,7 @@ package com.example.studentscoredbapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,9 +11,9 @@ class MainActivity : AppCompatActivity() {
 
         val btnAddSubject = findViewById<Button>(R.id.btnAddSubject)
         btnAddSubject.setOnClickListener {
-            val db = DBHelper(this, null)
-            val etSubjectName = findViewById<EditText>(R.id.etSubjectName)
-            val etSubjectScore = findViewById<EditText>(R.id.etSubjectScore)
+            val db = DBHelper(this)
+            val etSubjectName = this.findViewById<EditText>(R.id.etSubjectName)
+            val etSubjectScore = this.findViewById<EditText>(R.id.etSubjectScore)
             val name = etSubjectName.text.toString()
             val score = etSubjectScore.text.toString()
             db.addScore(name, score)
@@ -28,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         val btnPrintSubjects = findViewById<Button>(R.id.btnPrintSubjects)
         btnPrintSubjects.setOnClickListener {
-            val db = DBHelper(this, null)
+            val db = DBHelper(this)
             val userList = db.getAllSubjects()
             val tvSubjectRecord = findViewById<TextView>(R.id.tvSubjectRecord)
             tvSubjectRecord.text = "### Subjects ###\n"
@@ -39,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         val btnDeleteSubject = findViewById<Button>(R.id.btnDeleteSubject)
         btnDeleteSubject.setOnClickListener {
-            val db = DBHelper(this, null)
+            val db = DBHelper(this)
             val subjectName = findViewById<EditText>(R.id.etSubjectName).text.toString()
             val rows = db.deleteSubject(subjectName)
             Toast.makeText(this,
@@ -53,11 +50,24 @@ class MainActivity : AppCompatActivity() {
 
         val btnUpdateSubject = findViewById<Button>(R.id.btnUpdateSubject)
         btnUpdateSubject.setOnClickListener {
-            val db = DBHelper(this, null)
+            val db = DBHelper(this)
             val subjectName = findViewById<EditText>(R.id.etSubjectName).text.toString()
             val subjectScore = findViewById<EditText>(R.id.etSubjectScore).text.toString()
             val rows = db.updateSubject(subjectName, subjectScore)
             Toast.makeText(this, "$rows subjects updated", Toast.LENGTH_LONG).show()
+        }
+
+        val btnDeleteDB = findViewById<Button>(R.id.btnDeleteDB)
+        btnDeleteDB.setOnClickListener {
+            val db = DBHelper(this)
+            val isSuccessful = db.deleteDB()
+            Toast.makeText(this,
+                when (isSuccessful) {
+                    true -> "Database successfully deleted"
+                    false -> "Failed to delete database"
+                },
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 }

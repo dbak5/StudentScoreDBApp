@@ -5,15 +5,20 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
+class DBHelper(context: Context) :
     SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
+    var context: Context
+    init { // save context parameter object for later use
+        this.context = context
+    }
+
     companion object {
-        private val DB_NAME = "smt"
-        private val DB_VERSION = 1
-        val TABLE_NAME = "subject_table"
-        val ID = "id"
-        val NAME = "name"
-        val SCORE = "score"
+        private const val DB_NAME = "smt"
+        private const val DB_VERSION = 1
+        const val TABLE_NAME = "subject_table"
+        const val ID = "id"
+        const val NAME = "name"
+        const val SCORE = "score"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -52,9 +57,9 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         val db = this.readableDatabase
         // read all records from DB and get the cursor
         val cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null)
-        val subjectList = ArrayList<Subject>() // User ArrayList
+        val subjectList = ArrayList<Subject>() // subject ArrayList
         if (cursor.moveToFirst()) {
-            do { // add all users to the list
+            do { // add all subjects to the list
                 subjectList.add(
                     Subject(
                         cursor.getInt(cursor.getColumnIndexOrThrow(ID)),
@@ -73,7 +78,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         val db = this.writableDatabase
         // delete a subject by NAME
         val rows = db.delete(TABLE_NAME, "name=?", arrayOf(name))
-        db.close();
+        db.close()
         return rows // 0 or 1
     }
 
@@ -86,6 +91,11 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         val rows = db.update(TABLE_NAME, values, "name=?", arrayOf(name))
         db.close()
         return rows // rows updated
+    }
+
+    // delete database
+    fun deleteDB(): Boolean {
+        return context.deleteDatabase(DB_NAME)
     }
 
     // This method is to recreated DB and tables
