@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper
 
 class DBHelper(context: Context) :
     SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
-    var context: Context
+    private var context: Context
     init { // save context parameter object for later use
         this.context = context
     }
@@ -56,7 +56,7 @@ class DBHelper(context: Context) :
     fun getAllSubjects(): ArrayList<Subject> {
         val db = this.readableDatabase
         // read all records from DB and get the cursor
-        val cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null)
+        val cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
         val subjectList = ArrayList<Subject>() // subject ArrayList
         if (cursor.moveToFirst()) {
             do { // add all subjects to the list
@@ -99,6 +99,6 @@ class DBHelper(context: Context) :
     }
 
     // This method is to recreated DB and tables
-    fun recreateDatabaseAndTables() {
-    }
+//    fun recreateDatabaseAndTables() {
+//    }
 }

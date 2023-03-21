@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
             val score = etSubjectScore.text.toString()
             db.addScore(name, score)
             // Toast to message on the screen
-            Toast.makeText(this, name + " added to database", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "$name added to database", Toast.LENGTH_SHORT).show()
             etSubjectName.text.clear()
             etSubjectScore.text.clear()
         }
